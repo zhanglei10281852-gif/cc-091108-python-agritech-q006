@@ -1,0 +1,13 @@
+{
+  "domain": "produce-precooling",
+  "rules": [{"produce": "鲜食玉米", "package": "周转筐", "target_core_c": 4.0, "max_exposure_minutes": 35}],
+  "containers": [
+    {"id": "CRATE-101", "harvest_lot": "LOT-26-0911", "quantity": 24},
+    {"id": "CRATE-102", "harvest_lot": "LOT-26-0911", "quantity": 16}
+  ],
+  "scan_events": [
+    {"event_id": "SCAN-1", "kind": "split", "from": ["CRATE-101"], "to": ["CRATE-101-A", "CRATE-101-B"], "quantities": [12, 12], "device_at": "2026-09-11T11:10:00+08:00"},
+    {"event_id": "SCAN-2", "kind": "merge", "from": ["CRATE-101-B", "CRATE-102"], "to": ["CRATE-201"], "quantities": [28], "device_at": "2026-09-11T12:05:00+08:00"}
+  ],
+  "temperature": [{"probe_id": "CORE-7", "container_id": "CRATE-101-A", "at": "2026-09-11T11:45:00+08:00", "core_c": 5.2, "quality": "attached"}]
+}
