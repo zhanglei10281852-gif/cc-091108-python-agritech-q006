@@ -1,13 +1,49 @@
 {
   "domain": "produce-precooling",
-  "rules": [{"produce": "鲜食玉米", "package": "周转筐", "target_core_c": 4.0, "max_exposure_minutes": 35}],
+  "rules": [
+    {
+      "produce": "鲜食玉米",
+      "package": "周转筐",
+      "target_core_c": 4.0,
+      "max_exposure_minutes": 35,
+      "min_cooling_rate_c_per_hour": 3.0
+    }
+  ],
+  "clocks": [
+    {"device_id": "SCANNER-A", "offset_seconds": 90},
+    {"device_id": "CORE-7", "offset_seconds": -60},
+    {"device_id": "CORE-9", "offset_seconds": 0}
+  ],
+  "cooling_units": [
+    {"id": "UNIT-RECV", "kind": "receiving", "cooling": false},
+    {"id": "UNIT-VC-1", "kind": "vacuum_cooling", "cooling": true},
+    {"id": "UNIT-COLD-2", "kind": "cold_storage", "cooling": true}
+  ],
   "containers": [
-    {"id": "CRATE-101", "harvest_lot": "LOT-26-0911", "quantity": 24},
-    {"id": "CRATE-102", "harvest_lot": "LOT-26-0911", "quantity": 16}
+    {"id": "CRATE-101", "harvest_lot": "LOT-26-0911", "produce": "鲜食玉米", "package": "周转筐", "quantity": 24, "unit": "UNIT-RECV", "entered_at": "2026-09-11T10:50:00+08:00"},
+    {"id": "CRATE-102", "harvest_lot": "LOT-26-0911", "produce": "鲜食玉米", "package": "周转筐", "quantity": 16, "unit": "UNIT-RECV", "entered_at": "2026-09-11T10:50:00+08:00"}
   ],
   "scan_events": [
     {"event_id": "SCAN-1", "kind": "split", "from": ["CRATE-101"], "to": ["CRATE-101-A", "CRATE-101-B"], "quantities": [12, 12], "device_at": "2026-09-11T11:10:00+08:00"},
-    {"event_id": "SCAN-2", "kind": "merge", "from": ["CRATE-101-B", "CRATE-102"], "to": ["CRATE-201"], "quantities": [28], "device_at": "2026-09-11T12:05:00+08:00"}
+    {"event_id": "SCAN-2", "kind": "merge", "from": ["CRATE-101-B", "CRATE-102"], "to": ["CRATE-201"], "quantities": [28], "device_at": "2026-09-11T12:05:00+08:00"},
+    {"event_id": "SCAN-3", "kind": "transfer", "containers": ["CRATE-101-A"], "to_unit": "UNIT-VC-1", "device_at": "2026-09-11T11:35:00+08:00", "device_id": "SCANNER-A"},
+    {"event_id": "SCAN-4", "kind": "transfer", "containers": ["CRATE-201"], "to_unit": "UNIT-COLD-2", "device_at": "2026-09-11T12:20:00+08:00", "device_id": "SCANNER-A"},
+    {"event_id": "SCAN-5", "kind": "transfer", "containers": ["CRATE-101-A"], "to_unit": "UNIT-COLD-2", "device_at": "2026-09-11T12:30:00+08:00", "device_id": "SCANNER-A"}
   ],
-  "temperature": [{"probe_id": "CORE-7", "container_id": "CRATE-101-A", "at": "2026-09-11T11:45:00+08:00", "core_c": 5.2, "quality": "attached"}]
+  "temperature": [
+    {"probe_id": "CORE-7", "container_id": "CRATE-101-A", "at": "2026-09-11T11:35:00+08:00", "core_c": 7.8, "quality": "attached", "rh_percent": 92.0},
+    {"probe_id": "CORE-7", "container_id": "CRATE-101-A", "at": "2026-09-11T11:45:00+08:00", "core_c": 5.2, "quality": "attached"},
+    {"probe_id": "CORE-7", "container_id": "CRATE-101-A", "at": "2026-09-11T11:50:00+08:00", "core_c": 3.6, "quality": "detached", "rh_percent": 78.0},
+    {"probe_id": "CORE-7", "container_id": "CRATE-101-A", "at": "2026-09-11T11:55:00+08:00", "core_c": 4.7, "quality": "attached", "rh_percent": 95.0},
+    {"probe_id": "CORE-7", "container_id": "CRATE-101-A", "at": "2026-09-11T12:04:00+08:00", "core_c": 4.2, "quality": "attached", "rh_percent": 95.5},
+    {"probe_id": "CORE-7", "container_id": "CRATE-101-A", "at": "2026-09-11T12:09:00+08:00", "core_c": 3.9, "quality": "attached", "rh_percent": 96.0},
+    {"probe_id": "CORE-7", "container_id": "CRATE-101-A", "at": "2026-09-11T12:40:00+08:00", "core_c": 3.3, "quality": "attached", "rh_percent": 90.0},
+    {"probe_id": "CORE-9", "container_id": "CRATE-201", "at": "2026-09-11T12:25:00+08:00", "core_c": 8.6, "quality": "attached", "rh_percent": 90.0},
+    {"probe_id": "CORE-9", "container_id": "CRATE-201", "at": "2026-09-11T12:40:00+08:00", "core_c": 6.9, "quality": "attached"},
+    {"probe_id": "CORE-9", "container_id": "CRATE-201", "at": "2026-09-11T12:55:00+08:00", "core_c": 5.7, "quality": "attached"},
+    {"probe_id": "CORE-9", "container_id": "CRATE-201", "at": "2026-09-11T13:10:00+08:00", "core_c": 3.8, "quality": "detached"},
+    {"probe_id": "CORE-9", "container_id": "CRATE-201", "at": "2026-09-11T13:25:00+08:00", "core_c": 5.0, "quality": "attached"},
+    {"probe_id": "CORE-9", "container_id": "CRATE-201", "at": "2026-09-11T13:40:00+08:00", "core_c": 4.6, "quality": "attached"},
+    {"probe_id": "CORE-9", "container_id": "CRATE-201", "at": "2026-09-11T13:55:00+08:00", "core_c": 4.4, "quality": "attached"}
+  ]
 }
